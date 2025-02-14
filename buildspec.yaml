@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Installing AWS CLI and Terraform..."
+      - yum install -y jq
+      - curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+      - sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+      - sudo apt-get update && sudo apt-get install terraform -y
+
+  pre_build:
+    commands:
+      - echo "Setting AWS credentials..."
+      - export AWS_ACCESS_KEY_ID="YOUR_ACCESS_KEY"
+      - export AWS_SECRET_ACCESS_KEY="YOUR_SECRET_KEY"
+
+  build:
+    commands:
+      - echo "Initializing Terraform..."
+      - terraform init -backend-config="bucket=$TF_BUCKET" -backend-config="dynamodb_table=$TF_DYNAMODB_TABLE"
+      - terraform validate
+      - terraform plan -out=tfplan
+
+  post_build:
+    commands:
+      - echo "Applying Terraform..."
+      - terraform apply -auto-approve tfplan
