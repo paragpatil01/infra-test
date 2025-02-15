@@ -7,6 +7,14 @@ env:
   parameter-store:
     AWS_ACCESS_KEY_ID: "/CodeBuild/MY_AWS_ACCESS_KEY_ID"
     AWS_SECRET_ACCESS_KEY: "/CodeBuild/MY_AWS_SECRET_ACCESS_KEY"
+    TF_BUCKET: "/terraform/tf_bucket"
+    TF_DYNAMODB_TABLE: "/terraform/tf_dynamodb_table"
+
+phases:
+  pre_build:
+    commands:
+      - echo "TF_BUCKET: $TF_BUCKET"
+      - echo "TF_DYNAMODB_TABLE: $TF_DYNAMODB_TABLE"    
 
 
 phases:
