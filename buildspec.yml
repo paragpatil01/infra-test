@@ -5,10 +5,10 @@ phases:
     commands:
       - echo "Installing AWS CLI and Terraform..."
       - yum install -y jq
-      - sudo apt update && sudo apt install wget -y
+      - sudo yum update -y && sudo yum install wget -y
       - wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
       - echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-      - sudo apt update && sudo apt install -y terraform
+      - sudo yum update && sudo yum install -y terraform
 
   pre_build:
     commands:
