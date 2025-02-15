@@ -63,8 +63,9 @@ phases:
 
   pre_build:
     commands:
-      - echo "TF_BUCKET: $TF_BUCKET"
-      - echo "TF_DYNAMODB_TABLE: $TF_DYNAMODB_TABLE"
+      - echo "Checking environment variables..."
+      - echo "TF_BUCKET=${TF_BUCKET}"
+      - echo "TF_DYNAMODB_TABLE=${TF_DYNAMODB_TABLE}"
 
   build:
     commands:
