@@ -12,6 +12,7 @@ phases:
       python: 3.9
     on-failure: ABORT
     commands:
+      - sudo yum update -y && sudo yum install -y jq
       - tf_version=$TERRAFORM_VERSION
       - wget https://releases.hashicorp.com/terraform/"$TERRAFORM_VERSION"/terraform_"$TERRAFORM_VERSION"_linux_amd64.zip
       - unzip terraform_"$TERRAFORM_VERSION"_linux_amd64.zip
