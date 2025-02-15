@@ -1,3 +1,43 @@
+# version: 0.2
+
+# env:
+#   variables:
+#     TERRAFORM_VERSION: "0.15.3"
+#     TF_COMMAND: "apply"
+#   parameter-store:
+#     AWS_ACCESS_KEY_ID: "/CodeBuild/MY_AWS_ACCESS_KEY_ID"
+#     AWS_SECRET_ACCESS_KEY: "/CodeBuild/MY_AWS_SECRET_ACCESS_KEY"
+#     TF_BUCKET: "/terraform/tf_bucket"
+#     TF_DYNAMODB_TABLE: "/terraform/tf_dynamodb_table"
+
+# phases:
+#   install:
+#     runtime-versions:
+#       python: 3.9
+#     on-failure: ABORT
+#     commands:
+#       - tf_version= $TERRAFORM_VERSION
+#       - wget https://releases.hashicorp.com/terraform/"$TERRAFORM_VERSION"/terraform_"$TERRAFORM_VERSION"_linux_amd64.zip
+#       - unzip terraform_"$TERRAFORM_VERSION"_linux_amd64.zip
+#       - mv terraform /usr/local/bin/
+
+#   pre_build:
+#     commands:
+#       - echo "TF_BUCKET: $TF_BUCKET"
+#       - echo "TF_DYNAMODB_TABLE: $TF_DYNAMODB_TABLE"
+
+#   build:
+#     commands:
+#       - echo "Initializing Terraform..."
+#       - terraform init -backend-config="bucket=$TF_BUCKET" -backend-config="dynamodb_table=$TF_DYNAMODB_TABLE"
+#       - terraform validate
+#       - terraform plan -out=tfplan
+
+#   post_build:
+#     commands:
+#       - echo "Applying Terraform..."
+#       - terraform $TF_COMMAND --auto-approve
+
 version: 0.2
 
 env:
@@ -16,7 +56,7 @@ phases:
       python: 3.9
     on-failure: ABORT
     commands:
-      - tf_version= $TERRAFORM_VERSION
+      - echo "Installing Terraform..."
       - wget https://releases.hashicorp.com/terraform/"$TERRAFORM_VERSION"/terraform_"$TERRAFORM_VERSION"_linux_amd64.zip
       - unzip terraform_"$TERRAFORM_VERSION"_linux_amd64.zip
       - mv terraform /usr/local/bin/
