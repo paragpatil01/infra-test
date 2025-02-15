@@ -11,24 +11,20 @@ env:
     TF_DYNAMODB_TABLE: "/terraform/tf_dynamodb_table"
 
 phases:
-  pre_build:
-    commands:
-      - echo "TF_BUCKET: $TF_BUCKET"
-      - echo "TF_DYNAMODB_TABLE: $TF_DYNAMODB_TABLE"    
-
-
-phases:
   install:
     runtime-versions:
       python: 3.9
     on-failure: ABORT
     commands:
-      - sudo yum update -y && sudo yum install -y jq
       - tf_version=$TERRAFORM_VERSION
       - wget https://releases.hashicorp.com/terraform/"$TERRAFORM_VERSION"/terraform_"$TERRAFORM_VERSION"_linux_amd64.zip
       - unzip terraform_"$TERRAFORM_VERSION"_linux_amd64.zip
       - mv terraform /usr/local/bin/
 
+  pre_build:
+    commands:
+      - echo "TF_BUCKET: $TF_BUCKET"
+      - echo "TF_DYNAMODB_TABLE: $TF_DYNAMODB_TABLE"
 
   build:
     commands:
@@ -40,4 +36,4 @@ phases:
   post_build:
     commands:
       - echo "Applying Terraform..."
-      - terraform $TF_COMMAND  --auto-approve
+      - terraform $TF_COMMAND --auto-approve
